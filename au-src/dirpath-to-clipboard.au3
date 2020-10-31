@@ -2,6 +2,8 @@
 #include <MsgBoxConstants.au3>
 #include <Array.au3>
 
+#pragma compile(Icon, 'dirpath-to-clipboard.ico')
+
 $add_double_quotes = IniRead ( @ScriptDir & "\config.ini", "config", "add_double_quotes", "1" )
 $double_quotes = '"'
 If $add_double_quotes <> "1" Then

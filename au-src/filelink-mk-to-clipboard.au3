@@ -1,11 +1,9 @@
+#include <Array.au3>
+#include <File.au3>
 
-#pragma compile(Icon, 'filepath-to-clipboard.ico')
+#pragma compile(Icon, 'filelink-mk-to-clipboard.ico')
 
-$add_double_quotes = IniRead ( @ScriptDir & "\config.ini", "config", "add_double_quotes", "1" )
-$double_quotes = '"'
-If $add_double_quotes <> "1" Then
-   $double_quotes = ''
-EndIf
+$double_quotes = ''
 
 $multifiles_seperator = IniRead ( @ScriptDir & "\config.ini", "config", "multifiles_seperator", "1" )
 $seperator = ' '
@@ -16,11 +14,15 @@ EndIf
 $clipboard = ""
 For $i = 1 To $CmdLine[0]
    Local $filePath = $CmdLine[$i]
+
    If FileExists ($filePath) == 1 Then
+	  Local $sDrive = "", $sDir = "", $sFileName = "", $sExtension = ""
+	  Local $aPathSplit = _PathSplit($filePath, $sDrive, $sDir, $sFileName, $sExtension)
+
 	  If $clipboard <> "" Then
 		 $clipboard = $clipboard & $seperator
 	  EndIf
-	  $clipboard = $clipboard & $double_quotes & $CmdLine[$i] & $double_quotes
+	  $clipboard = $clipboard & '[' & $sFileName & '](' & $CmdLine[$i] & ')'
    EndIf
 Next
 
